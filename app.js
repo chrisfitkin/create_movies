@@ -23,41 +23,39 @@ app.get('/', function(req, res, next) {
 });
 
 app.post('/create_movie', function(req, res, next) {
-  var title = req.body.title;
-  var year = req.body.year;
-  var imdb = req.body.imdb;
-  if (typeof title == 'undefined') next('Please provide a Title');
-  if (typeof year == 'undefined') next('Please provide a Year');
-  if (typeof imdb == 'undefined') next('Please provide an IMDB ID');
-
-  var newMovie = {
-    title: title,
-    year: year,
-    imdb: imdb
-  }
 
   var url = 'mongodb://localhost:27017/video';
 
   MongoClient.connect(url, function(err, db) {
 
+      var title = req.body.title;
+      var year = req.body.year;
+      var imdb = req.body.imdb;
+      if (typeof title == 'undefined') next('Please provide a Title');
+      if (typeof year == 'undefined') next('Please provide a Year');
+      if (typeof imdb == 'undefined') next('Please provide an IMDB ID');
+
+      var newMovie = {
+        "title": title,
+        "year": year,
+        "imdb": imdb
+      }
+
+
       assert.equal(null, err);
       console.log("Successfully connected to server");
 
       // Add the movie to the database
-      db.collection('movies').insertOne(newMovie).toArray(function(err, doc) {
+      try {
+        db.movies.insertOne( newMovie );
+      } catch (e) {
+        next("Could not insert movie :(");
+      }
+      res.send(newMovie.title + " added with insertOne()");
+      console.log("Movie added with insertOne");
 
-          // Print
-          if(doc.acknowledged) {
-            res.send(newMovie.Title + " added using insertOne() with _id = " + doc.insertedId);
-          } else {
-            next("Could not insert movie :(");
-          }
+      db.close();
 
-          // More logging
-          console.log("Movie added with insertOne");
-
-          db.close();
-      });
   });
 });
 
