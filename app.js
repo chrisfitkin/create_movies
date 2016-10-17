@@ -36,23 +36,31 @@ app.post('/create_movie', function(req, res, next) {
       if (typeof imdb == 'undefined') next('Please provide an IMDB ID');
 
       var newMovie = {
-        "title": title,
-        "year": year,
-        "imdb": imdb
-      }
+        'title': title,
+        'year': year,
+        'imdb': imdb
+      };
 
 
       assert.equal(null, err);
-      console.log("Successfully connected to server");
+      // console.log("Successfully connected to server");
 
       // Add the movie to the database
-      try {
-        db.movies.insertOne( newMovie );
-      } catch (e) {
-        next("Could not insert movie :(");
-      }
-      res.send(newMovie.title + " added with insertOne()");
-      console.log("Movie added with insertOne");
+      // try {
+        // db.collection('movies').insertOne( newMovie );
+        db.collection('movies').insertOne(
+            { 'title': title, 'year': year, 'imdb': imdb },
+            function (err, r) {
+                assert.equal(null, err);
+                res.send("Document inserted with _id: " + r.insertedId);
+            }
+        );
+      // } catch (e) {
+      //   next(Error("Could not insert movie :("));
+      // }
+
+      // console.log("Movie added with insertOne");
+      res.end(newMovie.title + " added with insertOne()");
 
       db.close();
 
