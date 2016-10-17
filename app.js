@@ -1,7 +1,9 @@
 var express = require('express'),
     app = express(),
     engines = require('consolidate'),
-    bodyParser = require('body-parser');
+    bodyParser = require('body-parser'),
+    MongoClient = require('mongodb').MongoClient,
+    assert = require('assert');
 
 app.engine('html', engines.nunjucks);
 app.set('view engine', 'html');
