@@ -1,0 +1,28 @@
+<!doctype HTML>
+<html>
+  <head><title>Create Movie</title></head>
+  <body>
+     <form action="/create_movie" method="POST">
+        <h1>What movie do you want to add?</h1>
+        <p>
+          <label for="title">
+            <span>Movie Title</span><br/>
+            <input type="text" name="title" placeholder="Groundhog Day" />
+          </label>
+        </p>
+        <p>
+          <label for="year">
+            <span>Release Year</span><br/>
+            <input type="text" name="imdb" placeholder="1993" />
+          </label>
+        </p>
+        <p>
+          <label for="imdb">
+            <span>IMDB ID</span><br/>
+            <input type="text" name="imdb" placeholder="tt0107048" />
+          </label>
+        </p>
+        <input type="submit" value="Create Movie"/>
+     </form>
+  </body>
+</html>

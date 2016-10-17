@@ -6,7 +6,7 @@ var express = require('express'),
 app.engine('html', engines.nunjucks);
 app.set('view engine', 'html');
 app.set('views', __dirname + '/views');
-app.use(bodyParser.urlencoded({ extended: true })); 
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // Handler for internal server errors
 function errorHandler(err, req, res, next) {
@@ -16,7 +16,8 @@ function errorHandler(err, req, res, next) {
 }
 
 app.get('/', function(req, res, next) {
-    res.render('fruitPicker', { 'fruits' : [ 'apple', 'orange', 'banana', 'peach' ] });
+    // res.render('fruitPicker', { 'fruits' : [ 'apple', 'orange', 'banana', 'peach' ] });
+    res.render('createMovie');
 });
 
 app.post('/favorite_fruit', function(req, res, next) {
